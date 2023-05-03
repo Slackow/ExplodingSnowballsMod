@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "result": {
+    "item": "exploding_snowballs:exploding_snowball"
+  },
+  "key": {
+    "s": {
+      "item": "exploding_snowballs:snow_sand"
+    },
+    "g": {
+      "item": "minecraft:gunpowder"
+    },
+    "b": {
+      "item": "minecraft:snowball"
+    }
+  },
+  "pattern": [
+    "gsg",
+    "sbs",
+    "gsg"
+  ]
+}

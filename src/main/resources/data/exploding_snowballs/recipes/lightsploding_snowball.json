@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "exploding_snowballs:exploding_snowball"
+    },
+    {
+      "item": "exploding_snowballs:lightning_snowball"
+    }
+  ],
+  "result": {
+    "item": "exploding_snowballs:lightsploding_snowball",
+    "count": 2
+  }
+}

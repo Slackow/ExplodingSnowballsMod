@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "result": {
+    "item": "exploding_snowballs:lightning_snowball"
+  },
+  "key": {
+    "s": {
+      "item": "exploding_snowballs:snow_sand"
+    },
+    "b": {
+      "item": "minecraft:snowball"
+    }
+  },
+  "pattern": [
+    " s ",
+    "sbs",
+    " s "
+  ]
+}
