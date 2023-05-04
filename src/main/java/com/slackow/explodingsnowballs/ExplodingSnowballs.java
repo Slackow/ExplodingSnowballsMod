@@ -3,13 +3,14 @@ package com.slackow.explodingsnowballs;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.mixin.object.builder.AbstractBlockSettingsAccessor;
 import net.minecraft.block.Block;
 import net.minecraft.block.FallingBlock;
 import net.minecraft.block.Material;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroups;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -20,8 +21,8 @@ import net.minecraft.world.World;
 
 import java.util.function.Consumer;
 
-import static net.minecraft.block.Blocks.SNOW_BLOCK;
 import static net.minecraft.entity.EntityType.LIGHTNING_BOLT;
+import static net.minecraft.item.Items.SNOWBALL;
 
 public class ExplodingSnowballs implements ModInitializer {
 
@@ -56,6 +57,13 @@ public class ExplodingSnowballs implements ModInitializer {
 
         Registry.register(Registries.BLOCK, path("snow_sand"), SNOW_SAND);
         Registry.register(Registries.ITEM, path("snow_sand"), new BlockItem(SNOW_SAND, new FabricItemSettings()));
+
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(content -> {//
+            content.addAfter(SNOWBALL, EXPLODING_SNOWBALL, LIGHTNING_SNOWBALL, LIGHTSPLODING_SNOWBALL);
+        });
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(content -> {//
+            content.addAfter(SNOWBALL, SNOW_SAND);
+        });
     }
 
     private static Identifier path(String path) {

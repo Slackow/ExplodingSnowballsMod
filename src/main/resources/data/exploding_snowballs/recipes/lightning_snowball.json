@@ -9,11 +9,14 @@
     },
     "b": {
       "item": "minecraft:snowball"
+    },
+    "o": {
+      "item": "minecraft:lightning_rod"
     }
   },
   "pattern": [
-    " s ",
+    "oso",
     "sbs",
-    " s "
+    "oso"
   ]
 }
