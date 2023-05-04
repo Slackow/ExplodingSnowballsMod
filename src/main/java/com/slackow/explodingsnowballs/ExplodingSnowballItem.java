@@ -2,8 +2,8 @@ package com.slackow.explodingsnowballs;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.SnowballItem;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 
 import java.util.function.Consumer;
 
-public class ExplodingSnowballItem extends Item {
+public class ExplodingSnowballItem extends SnowballItem {
     private final Consumer<ExplodingSnowballEntity> action;
 
     public ExplodingSnowballItem(Consumer<ExplodingSnowballEntity> action) {
@@ -36,6 +36,10 @@ public class ExplodingSnowballItem extends Item {
             itemStack.decrement(1);
         }
         return TypedActionResult.success(itemStack, world.isClient());
+    }
+
+    public Consumer<ExplodingSnowballEntity> getAction() {
+        return action;
     }
 
 }

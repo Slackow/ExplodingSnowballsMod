@@ -6,20 +6,26 @@ import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
+import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.FallingBlock;
 import net.minecraft.block.Material;
+import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
+import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Util;
+import net.minecraft.util.math.Position;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 import static net.minecraft.entity.EntityType.LIGHTNING_BOLT;
 import static net.minecraft.item.Items.SNOWBALL;
@@ -41,11 +47,12 @@ public class ExplodingSnowballs implements ModInitializer {
 
     };
 
-    public static final Item EXPLODING_SNOWBALL = new ExplodingSnowballItem(explodeAtSnowball(5.0f));
-    public static final Item LIGHTNING_SNOWBALL = new ExplodingSnowballItem(LIGHTNING_AT_SNOWBALL);
-    public static final Item LIGHTSPLODING_SNOWBALL = new ExplodingSnowballItem(explodeAtSnowball(3.0f).andThen(LIGHTNING_AT_SNOWBALL));
+    public static final ExplodingSnowballItem EXPLODING_SNOWBALL = new ExplodingSnowballItem(explodeAtSnowball(5.0f));
+    public static final ExplodingSnowballItem LIGHTNING_SNOWBALL = new ExplodingSnowballItem(LIGHTNING_AT_SNOWBALL);
+    public static final ExplodingSnowballItem LIGHTSPLODING_SNOWBALL = new ExplodingSnowballItem(explodeAtSnowball(3.0f).andThen(LIGHTNING_AT_SNOWBALL));
     public static final Block SNOW_SAND = new FallingBlock(FabricBlockSettings.of(Material.SNOW_BLOCK).strength(0.2f).sounds(BlockSoundGroup.SNOW));
 
+    @SuppressWarnings("UnstableApiUsage")
     @Override
     public void onInitialize() {
         Registry.register(Registries.ITEM, path("exploding_snowball"), EXPLODING_SNOWBALL);
@@ -64,6 +71,17 @@ public class ExplodingSnowballs implements ModInitializer {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(content -> {//
             content.addAfter(SNOWBALL, SNOW_SAND);
         });
+
+        Stream.of(EXPLODING_SNOWBALL, LIGHTNING_SNOWBALL, LIGHTSPLODING_SNOWBALL)
+                .forEach(snowballItem -> {//
+                    DispenserBlock.registerBehavior(snowballItem, new ProjectileDispenserBehavior() {
+                        @Override
+                        protected ProjectileEntity createProjectile(World world, Position position, ItemStack stack) {
+                            return Util.make(new ExplodingSnowballEntity(world, position, snowballItem.getAction()), e -> e.setItem(stack));
+                        }
+                    });
+                });
+
     }
 
     private static Identifier path(String path) {
