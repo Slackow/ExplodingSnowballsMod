@@ -9,9 +9,6 @@
   "license": "MIT",
   "environment": "*",
   "entrypoints": {
-    "client": [
-      "com.slackow.explodingsnowballs.client.ExplodingSnowballsClient"
-    ],
     "main": [
       "com.slackow.explodingsnowballs.ExplodingSnowballs"
     ]
