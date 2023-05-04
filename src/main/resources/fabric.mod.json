@@ -7,7 +7,6 @@
   "authors": ["Slackow"],
   "contact": {},
   "license": "MIT",
-  "icon": "assets/ExplodingSnowballs/icon.png",
   "environment": "*",
   "entrypoints": {
     "client": [
@@ -17,12 +16,9 @@
       "com.slackow.explodingsnowballs.ExplodingSnowballs"
     ]
   },
-  "mixins": [
-    "ExplodingSnowballs.mixins.json"
-  ],
   "depends": {
     "fabricloader": ">=0.14.10",
-    "fabric": "*",
+    "fabric-api": "*",
     "minecraft": "1.19.4"
   }
 }
