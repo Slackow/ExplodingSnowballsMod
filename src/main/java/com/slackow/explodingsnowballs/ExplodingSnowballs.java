@@ -8,7 +8,6 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.FallingBlock;
-import net.minecraft.block.Material;
 import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.BlockItem;
@@ -27,6 +26,7 @@ import net.minecraft.world.World;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
+import static net.minecraft.block.Blocks.SNOW_BLOCK;
 import static net.minecraft.entity.EntityType.LIGHTNING_BOLT;
 import static net.minecraft.item.Items.SNOWBALL;
 
@@ -50,9 +50,8 @@ public class ExplodingSnowballs implements ModInitializer {
     public static final ExplodingSnowballItem EXPLODING_SNOWBALL = new ExplodingSnowballItem(explodeAtSnowball(5.0f));
     public static final ExplodingSnowballItem LIGHTNING_SNOWBALL = new ExplodingSnowballItem(LIGHTNING_AT_SNOWBALL);
     public static final ExplodingSnowballItem LIGHTSPLODING_SNOWBALL = new ExplodingSnowballItem(explodeAtSnowball(3.0f).andThen(LIGHTNING_AT_SNOWBALL));
-    public static final Block SNOW_SAND = new FallingBlock(FabricBlockSettings.of(Material.SNOW_BLOCK).strength(0.2f).sounds(BlockSoundGroup.SNOW));
+    public static final Block SNOW_SAND = new FallingBlock(FabricBlockSettings.copyOf(SNOW_BLOCK).strength(0.2f).sounds(BlockSoundGroup.SNOW));
 
-    @SuppressWarnings("UnstableApiUsage")
     @Override
     public void onInitialize() {
         Registry.register(Registries.ITEM, path("exploding_snowball"), EXPLODING_SNOWBALL);

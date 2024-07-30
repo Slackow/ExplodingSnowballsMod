@@ -38,7 +38,7 @@ public class ExplodingSnowballEntity extends SnowballEntity {
 
     @Override
     protected void onCollision(HitResult hitResult) {
-        if (!world.isClient) {
+        if (!getWorld().isClient) {
             action.accept(this);
         }
         if (!dataTracker.get(CONTINUES)) {
